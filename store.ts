@@ -4,7 +4,7 @@ import newsSliceReducer from './config/slice/news.slice'
 export const store = configureStore({
   reducer: {
       news: newsSliceReducer
-  },
+  }
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

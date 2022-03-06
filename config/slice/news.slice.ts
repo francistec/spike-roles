@@ -22,6 +22,18 @@ export const newsSlice = createSlice({
       })
       state = [...articles];
     },
+    editArticle: (state, action: PayloadAction<New>) => {
+     
+      const articles = state.map(x=>{
+        if(x.id === action.payload.id) {
+           x.name = action.payload.name;
+           x.text = action.payload.text
+        }
+        return x
+      })
+    
+      state =  [...articles];
+    },
     addNew: (state, action: PayloadAction<New> ) => {
       state = [ ...news, action.payload]
     }
@@ -29,6 +41,6 @@ export const newsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { addNew, changeStatus } = newsSlice.actions
+export const { addNew, changeStatus, editArticle } = newsSlice.actions
 
 export default newsSlice.reducer

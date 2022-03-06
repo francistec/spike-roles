@@ -21,10 +21,10 @@ const News = () => {
     const isDarkMode = useColorScheme() === 'dark';
     const news = useSelector((state: RootState) => state.news.filter(article=>article.status === NewStatus.published))
 
-
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     };
+
     return (<>
         <ScrollView
             contentInsetAdjustmentBehavior="automatic"

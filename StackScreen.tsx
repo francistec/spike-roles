@@ -4,10 +4,12 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import News from './screens/News'
 import { Text } from "react-native";
 import Dashboard from "./screens/Dashboard/Index";
+import Editor from "./screens/Edit";
 
 export type NewsScreenList = {
     News: undefined,
-    Dashboard: undefined
+    Dashboard: undefined,
+    Editor: {article: number} | undefined
 }
 
 
@@ -22,6 +24,7 @@ const StackNavigation = () => {
             <Stack.Navigator>
                 <Stack.Screen name='News' component={News} />
                 <Stack.Screen name='Dashboard' component={Dashboard} />
+                <Stack.Screen name='Editor' component={Editor} />
             </Stack.Navigator>
         </NavigationContainer>
     )
