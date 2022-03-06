@@ -9,7 +9,9 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { NewsScreenList } from "../../StackScreen";
 import Footer from "../../components/Footer";
 import { useNavigation } from "@react-navigation/native";
-import { news } from '../../mock/news'
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
+import { NewStatus } from "../../interfaces/New";
 
 type footerNavigation = StackNavigationProp<NewsScreenList, 'News'>
 
@@ -17,6 +19,8 @@ const News = () => {
 
     const navigation = useNavigation<footerNavigation>();
     const isDarkMode = useColorScheme() === 'dark';
+    const news = useSelector((state: RootState) => state.news.filter(article=>article.status === NewStatus.published))
+
 
     const backgroundStyle = {
         backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -28,7 +32,7 @@ const News = () => {
             <Header />
             <View
                 style={styles.sectionContainer}>
-                {news.map(i=> <Post name={i.name} text={i.text} />)}  
+                {news.map( i => <Post key={i.id} name={i.name} text={i.text} /> )}  
             </View>
         </ScrollView>
         <Footer navigation={navigation} />

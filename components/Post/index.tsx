@@ -1,10 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import { PostProp } from '../../interfaces/PostProp'
 
-interface PostProp {
-    name: string,
-    text: string
-}
 
 const Post = ({name, text}: PostProp) => {
     return (
@@ -15,7 +12,7 @@ const Post = ({name, text}: PostProp) => {
                 </View>
                 <Text style={styles.postTitle}>{name}</Text>
                 <Text>
-                    {text}
+                    { text }
                 </Text>
             </View>
         </>

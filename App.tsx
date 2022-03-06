@@ -10,12 +10,15 @@
 
 
 import React from 'react';
-import Footer from './components/Footer';
 import StackNavigation from './StackScreen'
+import { store } from './store'
+import { Provider } from 'react-redux'
 const App = () => {
   return (
     <>
-      <StackNavigation />
+      <Provider store={store}>
+        <StackNavigation />
+      </Provider>
     </>
   );
 };
