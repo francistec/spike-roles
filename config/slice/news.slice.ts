@@ -35,7 +35,11 @@ export const newsSlice = createSlice({
       state =  [...articles];
     },
     addNew: (state, action: PayloadAction<New> ) => {
-      state = [ ...news, action.payload]
+      const maxId = _.maxBy(state, 'id')?.id
+      const { payload } = action;
+      payload.id = maxId ? ( maxId + 1) : 0
+      payload.status = NewStatus.unpublished
+      state.push(payload)
     }
   },
 })

@@ -45,7 +45,7 @@ const Dashboard = () => {
         <>
             {news.map( i => <NewItem key={i.id} newItem={i} /> )}
             <View>
-                <Button  title="Add fake new"></Button>
+                <Button  onPress={()=>navigation.navigate('NewArticle')}  title="Add fake new"></Button>
             </View>
         </>
     )
