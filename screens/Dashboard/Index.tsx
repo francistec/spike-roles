@@ -7,7 +7,8 @@ import { changeStatus } from '../../config/slice/news.slice'
 import { StackNavigationProp } from "@react-navigation/stack";
 import { NewsScreenList } from "../../StackScreen";
 import { useNavigation } from "@react-navigation/native";
-
+import { User } from '../../auth/models/User'
+import { Actions } from "../../auth/actions";
 
 interface NewIemProp {
     newItem: New
@@ -21,31 +22,48 @@ const Dashboard = () => {
     const news = useSelector((state: RootState) => state.news)
     const navigation = useNavigation<editorNavigation>();
 
-    
+
+
+
 
     const NewItem = ({ newItem }: NewIemProp) => {
         return (
             <>
+
                 <Text style={styles.title}>{newItem.name}</Text>
                 <View style={styles.buttonsSection}>
-                    <TouchableOpacity onPress={()=>navigation.navigate('Editor', { article: newItem.id })}>
-                        <Text style={styles.button}>✏️ Edit</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>dispatch(changeStatus(newItem.id))}>
+                    {User.can(Actions.Edit) &&
+                        <TouchableOpacity onPress={() => navigation.navigate('Editor', { article: newItem.id })}>
+                            <Text style={styles.button}>✏️ Edit</Text>
+                        </TouchableOpacity>
+                    }
+
+                    <TouchableOpacity onPress={() => dispatch(changeStatus(newItem.id))}>
                         <Text style={styles.button}>
-                            {newItem.status === NewStatus.published ? '⛔ Unpublish' : '✅ Publish' }
+                            {newItem.status === NewStatus.published ? (User.can(Actions.Unpublish) ? '⛔ Unpublish' : '') :  (User.can(Actions.Publish) ? '✅ Publish' : '')}
                         </Text>
                     </TouchableOpacity>
                 </View>
+
+
+
             </>
         )
     }
 
     return (
         <>
-            {news.map( i => <NewItem key={i.id} newItem={i} /> )}
+            {User.can(Actions.Read) ?
+                <>
+                    {news.map(i => <NewItem key={i.id} newItem={i} />)}
+                </> :
+                <>
+                    <Text> Hold down cowboy</Text>
+                </>
+            }
+
             <View>
-                <Button  onPress={()=>navigation.navigate('NewArticle')}  title="Add fake new"></Button>
+                {User.can(Actions.Write) && <Button onPress={() => navigation.navigate('NewArticle')} title="Add fake new" />} 
             </View>
         </>
     )

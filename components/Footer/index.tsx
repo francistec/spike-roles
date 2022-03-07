@@ -1,7 +1,6 @@
-import { StackNavigationProp } from "@react-navigation/stack";
 import React  from "react";
 import { Button, StyleSheet, View} from "react-native";
-import { NewsScreenList } from "../../StackScreen";
+import { User } from "../../auth/models/User";
 
 interface FooterProps {
     navigation: any
@@ -9,16 +8,17 @@ interface FooterProps {
 
 const Footer = ({ navigation }: FooterProps) => {
 
-    const goToDashboard = () => {
+    const goToDashboard = (role: string) => {
+        User.setRole(role)
         navigation.navigate('Dashboard')
     }
 
     return (
         <>
             <View style={styles.container}>
-                <Button onPress={goToDashboard} title="Join as Admin" />
-                <Button onPress={goToDashboard} title="Join as Writer" />
-                <Button onPress={goToDashboard} title="Join as Editor" />
+                <Button onPress={()=>goToDashboard('Admin')} title="Join as Admin" />
+                <Button onPress={()=>goToDashboard('Writer')} title="Join as Writer" />
+                <Button onPress={()=>goToDashboard('Editor')} title="Join as Editor" />
             </View>
         </>
     )

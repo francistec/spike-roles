@@ -22,6 +22,7 @@ const Editor = () => {
             text: content,
             status: article.status
         }))
+        
 
     }
 
